@@ -1,6 +1,7 @@
 // sintaxe import xxx from 'path'; apos instaçao sucrase.
 import express from 'express';
 import routes from './routes';
+import './database';
 
 class App {
   // metodo constructor é chamado automaticamente

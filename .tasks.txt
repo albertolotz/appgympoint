@@ -1,14 +1,19 @@
 Tarefas - Criação AppGymPoint:
 Fase 1:
 
-[OK] Criar a aplicação do zero:
+  [OK] Criar a aplicação do zero:
   [OK] Utilizando o Express:
   [OK] Sucrase + Nodemon:
   [ok] Docker.
   [OK] ESLint + Prettier + EditorConfig;
-  Sequelize (Utilize PostgreSQL ou MySQL);
-  Criar repositorio git
-  subir app para github
+  [ok] Sequelize (Utilize PostgreSQL ou MySQL);
+  [ok] Criar repositorio git
+  [ok] subir app para github
+  [ok] Criar user Admim com recurso seeds
+  [] Autenticar Usuário Admim
+  [] criar migrations students
+  [] criar cadastro, alteração, deleção, students
+
 
 Funcionalidades
 
@@ -17,7 +22,7 @@ Funcionalidades
   Crie um usuário administrador utilizando a funcionalidade de seeds do sequelize,
   essa funcionalidade serve para criarmos registros na base de dados de forma automatizada.
 
-Para criar um seed utilize o comando:
+[OK] Para criar um seed utilize o comando:
 
 yarn sequelize seed:generate --name admin-user
 No arquivo gerado na pasta src/database/seeds adicione o código referente à criação de um usuário administrador:
@@ -46,6 +51,7 @@ module.exports = {
 Agora execute:
 
 yarn sequelize db:seed:all
+
 Agora você tem um usuário na sua base de dados, utilize esse usuário para todos logins daqui pra frente.
 
 A autenticação deve ser feita utilizando JWT.

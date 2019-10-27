@@ -1,0 +1,13 @@
+// arquivo que exporta arquivo e pastas criados
+// utilizar sintaxe "antiga ao es6" , pois não suporta import, export
+
+// padronização caminhos em windos, mac, linux
+
+const { resolve } = require('path');
+
+module.exports = {
+  config: resolve(__dirname, 'src', 'config', 'database.js'), // caminho exato arquivo de configuração database
+  'models-path': resolve(__dirname, 'src', 'app', 'models'), // caminho exato arquivo de configuração models
+  'migrations-path': resolve(__dirname, 'src', 'database', 'migrations'), // caminho exato arquivo de configuração migrations
+  'seeders-path': resolve(__dirname, 'src', 'database', 'seeds'), // caminho exato arquivo de configuração seeds
+};
