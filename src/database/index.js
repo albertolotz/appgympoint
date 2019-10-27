@@ -2,13 +2,15 @@
 
 import Sequelize from 'sequelize'; // responsavel pela conexção
 
-import User from '../app/models/users';
+import User from '../app/models/users'; // tabela users importada
+
+import Students from '../app/models/students'; // tabela Students importada
 
 import DatabaseConfig from '../config/database'; // importa configurações do banco de dados
 
 // array com todos os models da aplicação
 
-const models = [User];
+const models = [User, Students];
 
 class Database {
   constructor() {

@@ -5,7 +5,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/server.js",
-    "dev:debug": "nodemon --inspect src/server.js"
+    "dev:debug": "nodemon --inspect src/server.js",
+    "start:db" :"sudo docker start database",
+    "stop:db" :"sudo docker start database"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

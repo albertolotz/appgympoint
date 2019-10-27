@@ -11,7 +11,7 @@ Fase 1:
   [ok] subir app para github
   [ok] Criar user Admim com recurso seeds
   [] Autenticar Usuário Admim
-  [] criar migrations students
+  [Ok] criar migrations students
   [] criar cadastro, alteração, deleção, students
 
 
