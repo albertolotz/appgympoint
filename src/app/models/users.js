@@ -1,4 +1,5 @@
 import Sequelize, { Model } from 'sequelize';
+import bcrypty from 'bcryptjs';
 
 class User extends Model {
   static init(sequelize) {
@@ -13,6 +14,11 @@ class User extends Model {
         sequelize,
       }
     ); // classe pai que extendeu
+  }
+
+  // metodo que compara password informado com o cadastrado
+  checkPassword(password) {
+    return bcrypty.compare(password, this.password_hash);
   }
 }
 

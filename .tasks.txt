@@ -1,3 +1,6 @@
+jwt:aplicação_gympoint
+02b1e9e912535e7907125d15e883a873
+
 Tarefas - Criação AppGymPoint:
 Fase 1:
 
@@ -10,9 +13,8 @@ Fase 1:
   [ok] Criar repositorio git
   [ok] subir app para github
   [ok] Criar user Admim com recurso seeds
-  [] Autenticar Usuário Admim
-  [Ok] criar migrations students
-  [] criar cadastro, alteração, deleção, students
+  [ok] Autenticar Usuário Admim jwt
+  [Ok] criar migrations students ( deletar fazer depois, não pede da tarefa;)
 
 
 Funcionalidades
