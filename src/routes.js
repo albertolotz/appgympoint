@@ -7,9 +7,11 @@ import SessionController from './app/controllers/SessionController';
 import authMiddlewares from './app/middlewares/auth';
 
 const routes = new Router();
-routes.use(authMiddlewares);
+
 routes.post('/sessions', SessionController.store); // Rota autenticação usuário
+routes.use(authMiddlewares);
 routes.post('/students', StudentController.store); // rota cadastro estudantes
-routes.put('/students', StudentController.update); // Rota edição estudantes
+routes.put('/students/:id', StudentController.update); // Rota edição estudantes
+routes.get('/students', StudentController.index); // Rota listagem todos
 
 export default routes;

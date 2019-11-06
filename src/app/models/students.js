@@ -1,4 +1,5 @@
 import Sequelaze, { Model } from 'sequelize';
+import { differenceInYears } from 'date-fns';
 
 class Students extends Model {
   static init(sequelize) {
@@ -7,8 +8,13 @@ class Students extends Model {
         name: Sequelaze.STRING,
         email: Sequelaze.STRING,
         gender: Sequelaze.STRING,
-        age: Sequelaze.INTEGER,
         birth_date: Sequelaze.DATE,
+        age: {
+          type: Sequelaze.VIRTUAL,
+          get() {
+            return differenceInYears(new Date(), this.birth_date);
+          },
+        },
         weight: Sequelaze.FLOAT,
         height: Sequelaze.FLOAT,
       },

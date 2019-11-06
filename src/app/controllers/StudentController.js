@@ -13,10 +13,6 @@ class StudentController {
         .email()
         .required(),
       gender: Yup.string(1).required(),
-      age: Yup.number()
-        .required()
-        .positive()
-        .integer(),
       birth_date: Yup.date().required(),
       weight: Yup.number()
         .required()
@@ -76,9 +72,6 @@ class StudentController {
         .email()
         .required(),
       gender: Yup.string(1).required(),
-      age: Yup.number()
-        .positive()
-        .integer(),
       birth_date: Yup.date().required(),
       weight: Yup.number()
         .required()
@@ -95,11 +88,22 @@ class StudentController {
     }
 
     // procura estudante pela chave primária, se não encontra retorna mensagm de erro.
-    const studentExists = await Students.findByPk(req.body.id); // varialvel studentExists armazena resultado da busca
+    const studentExists = await Students.findByPk(req.params.id); // varialvel studentExists armazena resultado da busca
 
     if (!studentExists) {
       return res.status(400).json({ error: 'Estudante não encontrado!' });
     }
+    // valida a existência de algum cadastro que ja contenha o email informado
+    const emailstudentExists = await Students.findOne({
+      where: { email: req.body.email },
+    });
+
+    if (emailstudentExists) {
+      return res
+        .status(400)
+        .json({ error: 'Email já cadastrado para outro aluno!' });
+    }
+
     // se encontrou o estudante, faz as alterações e envia dados alterados ao front end.
     const {
       id,
@@ -117,13 +121,18 @@ class StudentController {
       name,
       email,
       gender,
-      age,
       birth_date,
+      age,
       weight,
       height,
     });
   }
-  // deleção aluno
+
+  // Listagem
+  async index(req, res) {
+    const allStudents = await Students.findAll();
+    return res.json(allStudents);
+  }
 }
 
 export default new StudentController();
