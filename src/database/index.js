@@ -6,11 +6,13 @@ import User from '../app/models/users'; // tabela users importada
 
 import Students from '../app/models/students'; // tabela Students importada
 
+import Plans from '../app/models/plans'; // tabela de planos
+
 import DatabaseConfig from '../config/database'; // importa configurações do banco de dados
 
 // array com todos os models da aplicação
 
-const models = [User, Students];
+const models = [User, Students, Plans];
 
 class Database {
   constructor() {

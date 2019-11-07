@@ -7,6 +7,22 @@ Lista de tarefas: 05-nov
 [x] criar modulo de variaveis de ambiente
 [x] ajustar retorno idade automatica de acordo com data nascimento.
 
+lista tarefas : 06-Nov
+[x] gestão de plano - criar migrations plans
+[x] criar cadastro plano
+[x] criar atualização plano
+[x] criar rota listagem
+[x] cirar rota remoção/desativar plano
+[x] cadastrar planos
+
+Lista tarefas : 07-Nov
+[] Criar migration Matricula
+[] Criar relacionamento entre tabelas
+[] Criar Cadastro da Matricula
+[] Criar atualização
+[] criar remoção
+[] criar Listagen de matriculas
+[] criar função envio de email apos matricula realizada.
 
 
 Funcionalidades do administrador
