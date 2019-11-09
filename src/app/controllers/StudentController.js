@@ -1,5 +1,5 @@
 import * as Yup from 'yup';
-import User from '../models/users'; // utiliado para autenticação
+// import User from '../models/users'; // utiliado para autenticação
 import Students from '../models/students'; //
 // array armazena campos que serão manipulados para input de dados e retorno ao frontend
 

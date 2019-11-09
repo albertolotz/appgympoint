@@ -1,27 +1,28 @@
-import Sequelaze, { Model } from 'sequelize';
+import Sequelize, { Model } from 'sequelize';
 import { differenceInYears } from 'date-fns';
 
 class Students extends Model {
   static init(sequelize) {
     super.init(
       {
-        name: Sequelaze.STRING,
-        email: Sequelaze.STRING,
-        gender: Sequelaze.STRING,
-        birth_date: Sequelaze.DATE,
+        name: Sequelize.STRING,
+        email: Sequelize.STRING,
+        gender: Sequelize.STRING,
+        birth_date: Sequelize.DATE,
         age: {
-          type: Sequelaze.VIRTUAL,
+          type: Sequelize.VIRTUAL,
           get() {
             return differenceInYears(new Date(), this.birth_date);
           },
         },
-        weight: Sequelaze.FLOAT,
-        height: Sequelaze.FLOAT,
+        weight: Sequelize.FLOAT,
+        height: Sequelize.FLOAT,
       },
       {
         sequelize,
       }
     );
+    return this;
   }
 }
 

@@ -1,18 +1,19 @@
-import Sequelaze, { Model } from 'sequelize';
+import Sequelize, { Model } from 'sequelize';
 
 class Plans extends Model {
   static init(sequelize) {
     super.init(
       {
-        title: Sequelaze.STRING,
-        duration: Sequelaze.INTEGER,
-        price: Sequelaze.FLOAT,
-        active: Sequelaze.BOOLEAN,
+        title: Sequelize.STRING,
+        duration: Sequelize.INTEGER,
+        price: Sequelize.FLOAT,
+        active: Sequelize.BOOLEAN,
       },
       {
         sequelize,
       }
     );
+    return this;
   }
 }
 

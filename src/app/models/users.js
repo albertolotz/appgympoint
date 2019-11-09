@@ -14,6 +14,7 @@ class User extends Model {
         sequelize,
       }
     ); // classe pai que extendeu
+    return this;
   }
 
   // metodo que compara password informado com o cadastrado

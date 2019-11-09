@@ -15,16 +15,24 @@ lista tarefas : 06-Nov
 [x] cirar rota remoção/desativar plano
 [x] cadastrar planos
 
-Lista tarefas : 07-Nov
-[] Criar migration Matricula
-[] Criar relacionamento entre tabelas
-[] Criar Cadastro da Matricula
-[] Criar atualização
-[] criar remoção
-[] criar Listagen de matriculas
+Lista tarefas : 07-Nov a 9-Nov
+[x] Criar migration Matricula
+[x] Criar relacionamento entre tabelas
+[x] Criar Cadastro da Matricula
+[x] Ajustar cadastro para data de termino calcular de acordo com dados plano.
+[x] AJustar calculo automatico do preço.
+[x] Criar atualização
+[x] criar remoção, detativação
+[x] criar Listagen de matriculas
 [] criar função envio de email apos matricula realizada.
 
+Tarefas 10-Nov
 
+[] check in
+[] pedido de ajuda.
+
+
+************** instrução *************
 Funcionalidades do administrador
 Abaixo estão descritas as funcionalidades que você deve adicionar em sua
 aplicação para administradores.
@@ -212,3 +220,70 @@ Utilize uma nova tabela no banco de dados chamada students.
 O cadastro de alunos só pode ser feito por administradores autenticados na aplicação.
 
 O aluno não pode se autenticar no sistema, ou seja, não possui senha.
+
+
+
+***** continuação registry controller
+// Atualização Plano
+
+  async update(req, res) {
+    // Validação dos dados de entrada
+    const schema = Yup.object().shape({
+      student_id: Yup.integer(),
+      plan_id: Yup.integer(),
+      start_date: Yup.date(),
+      end_date: Yup.date(),
+      price: Yup.number()
+        .required()
+        .positive(),
+      active: Yup.boolean(),
+    });
+    if (!(await schema.isValid(req.body))) {
+      // req,body passa valores que schima que valida as entradas
+      return res
+        .status(400)
+        .json({ error: 'Dados com formato inválido ou ausente!' });
+    }
+
+    // procura estudante pela chave primária, se não encontra retorna mensagm de erro.
+    const studentExists = await Students.findByPk(req.params.id); // varialvel studentExists armazena resultado da busca
+
+    if (!studentExists) {
+      return res.status(400).json({ error: 'Estudante não encontrado!' });
+    }
+    // procura plano pela chave primária, se não encontra retorna mensagm de erro.
+    const studentExists = await Students.findByPk(req.params.id); // varialvel studentExists armazena resultado da busca
+
+    if (!studentExists) {
+      return res.status(400).json({ error: 'Plano não encontrado!' });
+    }
+
+    // se encontrou o estudante, faz as alterações e envia dados alterados ao front end.
+    const {
+      id,
+      name,
+      email,
+      gender,
+      age,
+      birth_date,
+      weight,
+      height,
+    } = await studentExists.update(req.body);
+
+    return res.json({
+      id,
+      name,
+      email,
+      gender,
+      birth_date,
+      age,
+      weight,
+      height,
+    });
+  }
+
+  // Listagem
+  async index(req, res) {
+    const allStudents = await Students.findAll();
+    return res.json(allStudents);
+  }
