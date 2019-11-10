@@ -24,7 +24,9 @@ Lista tarefas : 07-Nov a 9-Nov
 [x] Criar atualização
 [x] criar remoção, detativação
 [x] criar Listagen de matriculas
-[] criar função envio de email apos matricula realizada.
+[x] criar função envio de email apos matricula realizada.
+[x] estelizar basico com html email - criar template
+[] formatar valores monetario e data e hora tamplate email.
 
 Tarefas 10-Nov
 

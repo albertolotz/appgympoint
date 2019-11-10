@@ -1,9 +1,10 @@
 import * as Yup from 'yup';
-import { addMonths } from 'date-fns';
+import { addMonths, format } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 import Registries from '../models/registries'; //
 import Students from '../models/students';
 import Plans from '../models/plans';
-
+import Mail from '../../lib/mail';
 // array armazena campos que serão manipulados para input de dados e retorno ao frontend
 
 class RegistryController {
@@ -28,7 +29,9 @@ class RegistryController {
         .json({ error: 'Dados com formato inválido ou ausente!' });
     }
     // procura Aluno pela chave primária.
-    const studentExists = await Students.findByPk(req.body.student_id);
+    const studentExists = await Students.findByPk(req.body.student_id, {
+      attributes: ['name', 'email'],
+    });
 
     if (!studentExists) {
       return res.status(401).json({ error: 'Estudante não encontrado!' });
@@ -36,6 +39,7 @@ class RegistryController {
     // procura o plano pela chave primária e verifica se esta ativo.
     const planisActive = await Plans.findOne({
       where: { id: req.body.plan_id, active: true },
+      attributes: ['title'],
     });
 
     if (!planisActive) {
@@ -60,8 +64,8 @@ class RegistryController {
     // Calculos de valor total do plano:
     const planDetails = await Plans.findByPk(req.body.plan_id);
     const finalPlanValue = planDetails.price * planDetails.duration;
-
     req.body.price = finalPlanValue;
+
     // calculo duração da matricula.
     const dateEndRegistry = addMonths(
       new Date(req.body.start_date),
@@ -78,6 +82,22 @@ class RegistryController {
       price,
       active,
     } = await Registries.create(req.body); // student recebe aluno criado com dados de body.
+    // envia email informado que o registro esta concluido
+    await Mail.sendMail({
+      to: `${studentExists.name} <${studentExists.email}>`,
+      subject: 'Bem vindo(a) à Familia GymPoint',
+      template: 'wellcome',
+      context: {
+        user_name: studentExists.name,
+        plan_title: planisActive.title,
+        value_total: finalPlanValue,
+        // date_start: format(req.body.start_date, "'Dia' dd 'de' MMMM"),
+        // date_end: format(dateEndRegistry, "'Dia' dd 'de' MMMM", { locale: pt }),
+        date_start: req.body.start_date,
+        date_end: dateEndRegistry,
+      },
+    });
+    // **View** envia resposta para frontEnd
     return res.json({
       student_id,
       plan_id,
@@ -195,30 +215,47 @@ class RegistryController {
         return res.json(inactives);
 
       case '1':
-        const activies = await Registries.findAll({ where: { active: true } });
-        return res.json(activies);
+        // eslint-disable-next-line no-case-declarations
+        const actives = await Registries.findAll({
+          where: { active: true },
+          attributes: ['start_date', 'end_date', 'price', 'active'],
+          include: [
+            {
+              model: Students,
+              as: 'Aluno',
+              attributes: ['name'],
+            },
+            {
+              model: Plans,
+              as: 'Plano',
+              attributes: ['title'],
+            },
+          ],
+        });
+        return res.json(actives);
 
       case '2':
-        const allReg = await Registries.findAll();
+        // eslint-disable-next-line no-case-declarations
+        const allReg = await Registries.findAll({
+          attributes: ['start_date', 'end_date', 'price', 'active'],
+          include: [
+            {
+              model: Students,
+              as: 'Aluno',
+              attributes: ['name'],
+            },
+            {
+              model: Plans,
+              as: 'Plano',
+              attributes: ['title'],
+            },
+          ],
+        });
         return res.json(allReg);
 
       default:
         return res.status(401).json({ error: 'Opção de busca não Válida' });
     }
-  }
-
-  // end of update - implementar depois
-
-  async CV(req, res) {
-    const planDetails = await Plans.findByPk(req.body.plan_id);
-    const finalPlanValue = planDetails.price * planDetails.duration;
-
-    const dateEndRegistry = addMonths(
-      new Date(req.body.start_date),
-      planDetails.duration
-    );
-
-    return res.json({ valor: finalPlanValue, dia: dateEndRegistry });
   }
 }
 
