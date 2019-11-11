@@ -5,19 +5,23 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/server.js",
+    "queue": "nodemon src/queue.js",
     "dev:debug": "nodemon --inspect src/server.js",
     "st:pg": "sudo docker start database",
-    "sto:pg": "sudo docker start database"
+    "st:re": "sudo docker start redisgympoint",
+    "st:mo": "sudo docker start mongogympoint"
   },
   "dependencies": {
     "@sentry/node": "5.7.1",
     "bcryptjs": "^2.4.3",
+    "bee-queue": "^1.2.2",
     "date-fns": "^2.0.0-beta.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",
     "express-handlebars": "^3.1.0",
     "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.7.9",
     "nodemailer": "^6.3.1",
     "nodemailer-express-handlebars": "^3.1.0",
     "nodemailer-handlebars": "^1.0.1",

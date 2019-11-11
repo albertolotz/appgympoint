@@ -27,12 +27,40 @@ Lista tarefas : 07-Nov a 9-Nov
 [x] criar função envio de email apos matricula realizada.
 [x] estelizar basico com html email - criar template
 [] formatar valores monetario e data e hora tamplate email.
+[] criar rotina de fila Obs: não esta enviando mas tb não da erro!
 
 Tarefas 10-Nov
 
 [] check in
+[] crir banco mongoose
+[] criar checkin controller
+[] criar rotas
+[] criar consulta de todos os checkins
+[] criar bloqueio para checkins mais de 5 x em 7 dias corridos
+
+
 [] pedido de ajuda.
 
+1. Checkins
+Quando o aluno chega na academia o mesmo realiza um check-in apenas informando
+seu ID de cadastro (ID do banco de dados);
+
+Esse check-in serve para monitorar quantas vezes o usuário frequentou a academia
+ na semana.
+
+A tabela de checkins possui os campos:
+
+student_id (referência ao aluno);
+created_at;
+updated_at;
+O usuário só pode fazer 5 checkins dentro de um período de 7 dias corridos.
+
+Exemplo de requisição: POST https://gympoint.com/students/3/checkins
+
+Crie uma rota para listagem de todos checkins realizados por um usuário com base
+ em seu ID de cadastro;
+
+Exemplo de requisição: GET https://gympoint.com/students/3/checkins
 
 ************** instrução *************
 Funcionalidades do administrador

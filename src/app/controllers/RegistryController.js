@@ -4,7 +4,9 @@ import pt from 'date-fns/locale/pt';
 import Registries from '../models/registries'; //
 import Students from '../models/students';
 import Plans from '../models/plans';
-import Mail from '../../lib/mail';
+import wellcomeMail from '../jobs/wellcomeMail';
+
+import Queue from '../../lib/queue';
 // array armazena campos que serão manipulados para input de dados e retorno ao frontend
 
 class RegistryController {
@@ -82,21 +84,15 @@ class RegistryController {
       price,
       active,
     } = await Registries.create(req.body); // student recebe aluno criado com dados de body.
+
+    //* *********************************** */
+
     // envia email informado que o registro esta concluido
-    await Mail.sendMail({
-      to: `${studentExists.name} <${studentExists.email}>`,
-      subject: 'Bem vindo(a) à Familia GymPoint',
-      template: 'wellcome',
-      context: {
-        user_name: studentExists.name,
-        plan_title: planisActive.title,
-        value_total: finalPlanValue,
-        // date_start: format(req.body.start_date, "'Dia' dd 'de' MMMM"),
-        // date_end: format(dateEndRegistry, "'Dia' dd 'de' MMMM", { locale: pt }),
-        date_start: req.body.start_date,
-        date_end: dateEndRegistry,
-      },
+
+    await Queue.add(wellcomeMail.key, {
+      studentExists,
     });
+
     // **View** envia resposta para frontEnd
     return res.json({
       student_id,
