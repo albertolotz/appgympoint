@@ -33,7 +33,7 @@ Lista tarefas : 07-Nov a 9-Nov
 Tarefas 10-Nov
 
 [x] check in
-[] crir migration
+[x] crir migration
 [] criar checkin controller
 [] criar rotas
 [] criar consulta de todos os checkins
