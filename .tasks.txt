@@ -26,6 +26,7 @@ Lista tarefas : 07-Nov a 9-Nov
 [x] criar Listagen de matriculas
 [x] criar função envio de email apos matricula realizada.
 [x] estelizar basico com html email - criar template
+[] crir rotina de fila de emails
 [] formatar valores monetario e data e hora tamplate email.
 [] criar rotina de fila Obs: não esta enviando mas tb não da erro!
 
