@@ -4,11 +4,12 @@ import RegistryController from './app/controllers/RegistryController';
 import SessionController from './app/controllers/SessionController';
 import StudentController from './app/controllers/StudentController';
 import PlanController from './app/controllers/PlanController';
+import CheckinController from './app/controllers/CheckinController';
 
 import authMiddlewares from './app/middlewares/auth';
 
 const routes = new Router();
-
+routes.post('/checkin/:id', CheckinController.store); // registra checkin do aluno - não autenticado
 routes.post('/sessions', SessionController.store); // Rota autenticação usuário
 routes.use(authMiddlewares);
 routes.post('/students', StudentController.store); // rota cadastro estudantes

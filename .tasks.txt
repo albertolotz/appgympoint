@@ -32,7 +32,7 @@ Lista tarefas : 07-Nov a 9-Nov
 Tarefas 10-Nov
 
 [] check in
-[] crir banco mongoose
+[] crir migration
 [] criar checkin controller
 [] criar rotas
 [] criar consulta de todos os checkins
