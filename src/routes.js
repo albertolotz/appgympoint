@@ -10,6 +10,7 @@ import authMiddlewares from './app/middlewares/auth';
 
 const routes = new Router();
 routes.post('/checkin/:id', CheckinController.store); // registra checkin do aluno - não autenticado
+routes.get('/checkin/:id/list', CheckinController.index); // lista todos os checlins do usuário
 routes.post('/sessions', SessionController.store); // Rota autenticação usuário
 routes.use(authMiddlewares);
 routes.post('/students', StudentController.store); // rota cadastro estudantes

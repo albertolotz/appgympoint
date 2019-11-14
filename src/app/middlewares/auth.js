@@ -7,7 +7,7 @@ export default async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (!authHeader) {
-    return res.status(401).json({ error: 'Usuário não autenticado!' });
+    return res.status(401).json({ error: 'xxUsuário não autenticado!' });
   }
   // separa o resultado do cabeçalho pelo espaço em branco
   const [, token] = authHeader.split(' ');
