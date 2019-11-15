@@ -27,8 +27,8 @@ Lista tarefas : 07-Nov a 9-Nov
 [x] criar função envio de email apos matricula realizada.
 [x] estelizar basico com html email - criar template
 [x] crir rotina de fila de emails
-[] formatar valores monetario e data e hora tamplate email.
-[+-] criar rotina de fila Obs: não esta enviando mas tb não da erro!
+[x] formatar valores monetario e data e hora tamplate email.
+[x] criar rotina de fila Obs: não esta enviando mas tb não da erro!
 
 Tarefas 10-Nov
 
@@ -48,7 +48,7 @@ ID de cadastro (ID do banco de dados);
 [x] Crie uma rota para listar todos pedidos de auxílio de um usuário com base em
 seu ID de cadastro;
 [x] Crie uma rota para a academia responder um pedido de auxílio:
-[?] Quando um pedido de auxílio for respondido, o aluno deve receber um e-mail da
+[x] Quando um pedido de auxílio for respondido, o aluno deve receber um e-mail da
 plataforma com a pergunta e resposta da academia;
 [x] Crie uma rota para a academia listar todos pedidos de auxílio sem resposta;
 

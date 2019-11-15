@@ -1,5 +1,8 @@
 // import Mongoose from 'mongoose';
 import HelpOrders from '../schemas/helpOrders';
+import AnswerResponseMail from '../jobs/answerResponseMail';
+import Students from '../models/students';
+import Queue from '../../lib/queue';
 
 class HelpordersController {
   async store(req, res) {
@@ -26,7 +29,17 @@ class HelpordersController {
       },
       { new: true }
     );
+
     // enviar email
+    const studentData = await Students.findByPk(helpOrders.student_id);
+
+    await Queue.add(AnswerResponseMail.key, {
+      studentData,
+      helpOrders,
+    });
+
+    // envia resposta para front end.
+
     return res.json({ helpOrders });
   } // end update
 
@@ -41,7 +54,7 @@ class HelpordersController {
 
   // listagem pedido de auxilio de um unico aluno
 
-  async indexUnique(req, res) {
+  async show(req, res) {
     const helpOrders = await HelpOrders.find({
       student_id: req.params.id,
     }).sort({ createdAt: 1 });

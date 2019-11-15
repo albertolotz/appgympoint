@@ -20,7 +20,7 @@ routes.use(authMiddlewares);
 
 routes.put('/orderhelp/:id', OrderHelpController.update); // responde pedido de ajuda
 routes.get('/orderhelp', OrderHelpController.index); // consulta todos os chamados em aberto
-routes.get('/orderhelp/:id', OrderHelpController.indexUnique); // consulta todos os chamados em aberto
+routes.get('/orderhelp/:id', OrderHelpController.show); // consulta chamados em aberto de um aluno
 
 routes.post('/students', StudentController.store); // rota cadastro estudantes
 routes.put('/students/:id', StudentController.update); // Rota edição estudantes

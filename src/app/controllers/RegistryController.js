@@ -91,6 +91,8 @@ class RegistryController {
 
     await Queue.add(wellcomeMail.key, {
       studentExists,
+      planDetails,
+      plansData: { de: end_date, di: start_date, va: price },
     });
 
     // **View** envia resposta para frontEnd

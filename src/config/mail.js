@@ -4,7 +4,7 @@ export default {
   auth: {
     user: process.env.MAIL_USER,
     pass: process.env.MAIL_PASS,
-  },
+},
   secure: false,
   default: {
     from: 'GymPass - Best of Fitness<noreplay@gympass.com>',
