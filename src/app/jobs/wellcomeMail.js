@@ -9,7 +9,7 @@ class WellcomeMail {
 
   async handle({ data }) {
     const { studentExists } = data;
-
+    console.log('Passou 1');
     await Mail.sendMail({
       to: `${studentExists.name} <${studentExists.email}>`,
       subject: 'Bem vindo(a) à Familia GymPoint',
@@ -24,7 +24,8 @@ class WellcomeMail {
         // date_end: dateEndRegistry,
       },
     });
+    console.log('Passou 2');
   }
 }
-
+console.log('Passou 3');
 export default new WellcomeMail();

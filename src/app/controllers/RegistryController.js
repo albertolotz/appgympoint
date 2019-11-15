@@ -188,7 +188,6 @@ class RegistryController {
   // bloco listagem
 
   async index(req, res) {
-    console.log(req.params.tp);
     switch (req.params.tp) {
       case '0':
         // eslint-disable-next-line no-case-declarations

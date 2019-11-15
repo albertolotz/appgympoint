@@ -5,6 +5,7 @@ import SessionController from './app/controllers/SessionController';
 import StudentController from './app/controllers/StudentController';
 import PlanController from './app/controllers/PlanController';
 import CheckinController from './app/controllers/CheckinController';
+import OrderHelpController from './app/controllers/OrderHelpController';
 
 import authMiddlewares from './app/middlewares/auth';
 
@@ -12,7 +13,15 @@ const routes = new Router();
 routes.post('/checkin/:id', CheckinController.store); // registra checkin do aluno - não autenticado
 routes.get('/checkin/:id/list', CheckinController.index); // lista todos os checlins do usuário
 routes.post('/sessions', SessionController.store); // Rota autenticação usuário
+
+routes.post('/orderhelp/:id', OrderHelpController.store); // cadastro novo pedido de ajuda
+
 routes.use(authMiddlewares);
+
+routes.put('/orderhelp/:id', OrderHelpController.update); // responde pedido de ajuda
+routes.get('/orderhelp', OrderHelpController.index); // consulta todos os chamados em aberto
+routes.get('/orderhelp/:id', OrderHelpController.indexUnique); // consulta todos os chamados em aberto
+
 routes.post('/students', StudentController.store); // rota cadastro estudantes
 routes.put('/students/:id', StudentController.update); // Rota edição estudantes
 routes.get('/students', StudentController.index); // Rota listagem todos
