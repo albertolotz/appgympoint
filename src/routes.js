@@ -25,6 +25,8 @@ routes.get('/orderhelp/:id', OrderHelpController.show); // consulta chamados em 
 routes.post('/students', StudentController.store); // rota cadastro estudantes
 routes.put('/students/:id', StudentController.update); // Rota edição estudantes
 routes.get('/students', StudentController.index); // Rota listagem todos
+routes.get('/students/:id', StudentController.show); // listagem um Aluno
+routes.delete('/students/:id', StudentController.delete); // Apaga Aluno
 
 routes.post('/plans', PlanController.store); // adiciona novo plano
 routes.put('/plans/:id', PlanController.update); // atualiza planos

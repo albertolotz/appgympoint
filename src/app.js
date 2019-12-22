@@ -2,6 +2,7 @@
 
 import 'dotenv/config'; // para utilizar as variaves glocais .env , acessa process.env.VARIAVEL
 import express from 'express';
+import cors from 'cors'; // permite que outras aplicações acessem a API
 import * as Sentry from '@sentry/node'; // bibliotca monitoramento erros on line.
 import Youch from 'youch'; // melhora visualização das mesagens de erro.
 import configSentry from './config/Sentry';
@@ -27,6 +28,7 @@ class App {
   middlewares() {
     // set aplicação para receber requisições formato json
     this.server.use(Sentry.Handlers.requestHandler());
+    this.server.use(cors())
     this.server.use(express.json());
   }
 

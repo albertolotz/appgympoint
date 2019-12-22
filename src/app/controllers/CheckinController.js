@@ -1,7 +1,6 @@
 import * as Yup from 'yup';
-import { subDays, addMonths, format, parseISO } from 'date-fns';
+import { subDays } from 'date-fns';
 
-import pt from 'date-fns/locale/pt';
 import { Op } from 'sequelize';
 import Registries from '../models/registries'; //
 import Checkins from '../models/checkins'; //
