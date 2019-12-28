@@ -129,7 +129,7 @@ class StudentController {
     });
   }
 
-  // Listagem
+  // Listagem paginada
   async index(req, res) {
     const { page = 1 } = req.query;
     const totalPages = 10;

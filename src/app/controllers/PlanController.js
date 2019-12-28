@@ -83,10 +83,20 @@ class PlansController {
     });
   }
 
-  // Listagem
+  // Listagem totos
   async index(req, res) {
-    const allPlans = await Plans.findAll(); // {where: { active: true },}
+    const allPlans = await Plans.findAll({
+      where: { active: true },
+    });
     return res.json(allPlans);
+  }
+
+  // Listagem de um
+  async show(req, res) {
+    const onePlans = await Plans.findOne({
+      where: { id: req.params.id, active: true },
+    });
+    return res.json(onePlans);
   }
 
   // ativar e desativar planos

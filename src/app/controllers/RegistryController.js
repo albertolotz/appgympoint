@@ -1,6 +1,6 @@
 import * as Yup from 'yup';
-import { addMonths, format } from 'date-fns';
-import pt from 'date-fns/locale/pt';
+import { Op } from 'sequelize'; // importaçã operador busca
+import { addMonths } from 'date-fns';
 import Registries from '../models/registries'; //
 import Students from '../models/students';
 import Plans from '../models/plans';
@@ -36,7 +36,7 @@ class RegistryController {
     });
 
     if (!studentExists) {
-      return res.status(401).json({ error: 'Estudante não encontrado!' });
+      return res.status(401).send('Aluno Não Encontrado!');
     }
     // procura o plano pela chave primária e verifica se esta ativo.
     const planisActive = await Plans.findOne({
@@ -45,7 +45,7 @@ class RegistryController {
     });
 
     if (!planisActive) {
-      return res.status(401).json({ error: 'Plano não encontrado!' });
+      return res.status(401).send('Plano não encontrado!');
     }
 
     // Verifica se o aluno ja possui um plano ativo iqual ao informado.
@@ -60,8 +60,9 @@ class RegistryController {
     if (planExiststoUser) {
       return res
         .status(401)
-        .json({ error: 'Já existe uma matricula ativa para este aluno.' });
+        .send('Já existe uma matricula ativa para este aluno.');
     }
+
     // depois criar função.
     // Calculos de valor total do plano:
     const planDetails = await Plans.findByPk(req.body.plan_id);
@@ -190,70 +191,60 @@ class RegistryController {
   // bloco listagem
 
   async index(req, res) {
-    switch (req.params.tp) {
-      case '0':
-        // eslint-disable-next-line no-case-declarations
-        const inactives = await Registries.findAll({
-          where: { active: false },
-          attributes: ['start_date', 'end_date', 'price', 'active'],
-          include: [
-            {
-              model: Students,
-              as: 'Aluno',
-              attributes: ['name'],
-            },
-            {
-              model: Plans,
-              as: 'Plano',
-              attributes: ['title'],
-            },
-          ],
-        });
-        return res.json(inactives);
+    const { page = 1 } = req.query;
+    const totalPages = 10;
+    const { q } = req.query;
 
-      case '1':
-        // eslint-disable-next-line no-case-declarations
-        const actives = await Registries.findAll({
-          where: { active: true },
-          attributes: ['start_date', 'end_date', 'price', 'active'],
-          include: [
-            {
-              model: Students,
-              as: 'Aluno',
-              attributes: ['name'],
-            },
-            {
-              model: Plans,
-              as: 'Plano',
-              attributes: ['title'],
-            },
-          ],
-        });
-        return res.json(actives);
+    const countRegistries = await Registries.count({
+      include: [
+        {
+          model: Students,
+          as: 'Aluno',
+          attributes: ['name'],
+          where: { name: { [Op.like]: `%${q}%` } },
+        },
+        {
+          model: Plans,
+          as: 'Plano',
+          attributes: ['title'],
+        },
+      ],
+    });
 
-      case '2':
-        // eslint-disable-next-line no-case-declarations
-        const allReg = await Registries.findAll({
-          attributes: ['start_date', 'end_date', 'price', 'active'],
-          include: [
-            {
-              model: Students,
-              as: 'Aluno',
-              attributes: ['name'],
-            },
-            {
-              model: Plans,
-              as: 'Plano',
-              attributes: ['title'],
-            },
-          ],
-        });
-        return res.json(allReg);
+    const pages = Math.ceil(countRegistries / totalPages);
 
-      default:
-        return res.status(401).json({ error: 'Opção de busca não Válida' });
+    const registries = await Registries.findAll({
+      include: [
+        {
+          model: Students,
+          as: 'Aluno',
+          attributes: ['name'],
+          where: { name: { [Op.like]: `%${q}%` } },
+          order: 'name',
+        },
+        {
+          model: Plans,
+          as: 'Plano',
+          attributes: ['title'],
+        },
+      ],
+
+      limit: totalPages,
+      offset: (page - 1) * totalPages,
+      attributes: ['id', 'start_date', 'end_date', 'price', 'active'],
+    });
+    return res.json({
+      registries,
+      pages,
+    });
+  }
+
+  async show(req, res) {
+    const registries = await Registries.findByPk(req.params.id);
+    if (!registries) {
+      return res.status(401).send('Matricula não Existe');
     }
+    return res.json({ registries });
   }
 }
-
 export default new RegistryController();
