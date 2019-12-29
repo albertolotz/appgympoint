@@ -20,8 +20,7 @@ class HelpordersController {
     // avaliar add try pois pode ocorrer algum erro.
     const helpOrders = await HelpOrders.findOneAndUpdate(
       {
-        student_id: req.params.id,
-        createdAt: req.header('created'),
+        _id: req.params.id,
       },
       {
         answer_at: new Date(),

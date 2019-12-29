@@ -53,7 +53,6 @@ class RegistryController {
       where: {
         student_id: req.body.student_id,
         plan_id: req.body.plan_id,
-        active: true,
       },
     });
 
@@ -83,7 +82,6 @@ class RegistryController {
       start_date,
       end_date,
       price,
-      active,
     } = await Registries.create(req.body); // student recebe aluno criado com dados de body.
 
     //* *********************************** */
@@ -103,7 +101,6 @@ class RegistryController {
       start_date,
       end_date,
       price,
-      active,
     }); // retorna algo em formato de json para cliente aplicação, neste caso student.
   }
 
@@ -167,25 +164,13 @@ class RegistryController {
       return res.status(401).json({ error: 'Matricula não Existe' });
     }
 
-    req.body.active = false;
-
     // caso não exista validações acima Ok ...
-    const {
-      student_id,
-      plan_id,
-      start_date,
-      end_date,
-      price,
-      active,
-    } = await registryExists.update(req.body);
-    return res.json({
-      student_id,
-      plan_id,
-      start_date,
-      end_date,
-      price,
-      active,
-    });
+    try {
+      const deleteRegistry = await registryExists.destroy(req.params.id);
+      return res.json({ deleteRegistry });
+    } catch (err) {
+      return res.send(err);
+    }
   }
 
   // bloco listagem
