@@ -7,18 +7,21 @@ import PlanController from './app/controllers/PlanController';
 import CheckinController from './app/controllers/CheckinController';
 import OrderHelpController from './app/controllers/OrderHelpController';
 import StudentSearchController from './app/controllers/StudentSearchController';
+import SessionControllerSdudent from './app/controllers/SessionControllerSdudent';
 
 import authMiddlewares from './app/middlewares/auth';
 
 const routes = new Router();
-routes.post('/checkin/:id', CheckinController.store); // registra checkin do aluno - não autenticado
-routes.get('/checkin/:id/list', CheckinController.index); // lista todos os checlins do usuário
-routes.post('/sessions', SessionController.store); // Rota autenticação usuário
 
-routes.post('/orderhelp/:id', OrderHelpController.store); // cadastro novo pedido de ajuda
+routes.post('/sessions', SessionController.store); // Rota autenticação usuário
+routes.post('/sessionstudent', SessionControllerSdudent.store); // Rota autenticação aluno no app usuário
 
 routes.use(authMiddlewares);
 
+routes.post('/checkin/:id', CheckinController.store); // registra checkin do aluno - não autenticado
+routes.get('/checkin/:id/list', CheckinController.index); // lista todos os checlins do usuário
+
+routes.post('/orderhelp/:id', OrderHelpController.store); // cadastro novo pedido de ajuda
 routes.put('/orderhelp/:id', OrderHelpController.update); // responde pedido de ajuda
 routes.get('/orderhelp', OrderHelpController.index); // consulta todos os chamados em aberto
 routes.get('/orderhelp/:id', OrderHelpController.show); // consulta chamados em aberto de um aluno
@@ -42,4 +45,5 @@ routes.put('/registry/:id', RegistryController.update); // atualiza plano do alu
 routes.delete('/registry/:id', RegistryController.delete); // destiva planos do aluno.
 routes.get('/registry', RegistryController.index); // Lista Matriculas
 routes.get('/registry/:id', RegistryController.show); // Lista uma Matricula
+
 export default routes;

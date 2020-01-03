@@ -40,7 +40,6 @@ class CheckinController {
     const planExiststoUser = await Registries.findOne({
       where: {
         student_id: req.params.id,
-        active: true,
         end_date: { [Op.gt]: Date() },
       },
     });
@@ -74,6 +73,7 @@ class CheckinController {
     return res.json({ checkinDone });
   }
 
+  // listagem
   async index(req, res) {
     // valida se ID é numero
     const schema = Yup.object().shape({
@@ -99,13 +99,13 @@ class CheckinController {
     // executa a pesquisa
     const allCheckins = await Checkins.findAll({
       where: { student_id: req.params.id },
-      attributes: ['student_id', ['created_at', 'Data Check-In']],
+      attributes: ['student_id', ['created_at', 'dataCheckIn']],
       include: [
         {
           model: Students,
           as: 'Aluno',
           attributes: ['name'],
-          order: 'created_at',
+          order: ['created_at'],
         },
       ],
     });

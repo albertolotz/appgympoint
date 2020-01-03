@@ -36,7 +36,7 @@ class RegistryController {
     });
 
     if (!studentExists) {
-      return res.status(401).send('Aluno Não Encontrado!');
+      return res.status(401).json({ error: 'Aluno não encontrado' });
     }
     // procura o plano pela chave primária e verifica se esta ativo.
     const planisActive = await Plans.findOne({
@@ -45,7 +45,7 @@ class RegistryController {
     });
 
     if (!planisActive) {
-      return res.status(401).send('Plano não encontrado!');
+      return res.status(401).json({ error: 'Plano não encotrado!' });
     }
 
     // Verifica se o aluno ja possui um plano ativo iqual ao informado.
@@ -59,7 +59,7 @@ class RegistryController {
     if (planExiststoUser) {
       return res
         .status(401)
-        .send('Já existe uma matricula ativa para este aluno.');
+        .json({ error: 'Ja existe matricula ativa para este aluno' });
     }
 
     // depois criar função.
@@ -169,7 +169,7 @@ class RegistryController {
       const deleteRegistry = await registryExists.destroy(req.params.id);
       return res.json({ deleteRegistry });
     } catch (err) {
-      return res.send(err);
+      return res.status(401).json({ error: 'erro desconhecido' });
     }
   }
 
